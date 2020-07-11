@@ -1,19 +1,11 @@
 export const topLevel = {
   name: 'Baleada',
   extension: 'js',
-  id: 'ABC',
-  path: {
-    relativeFromFiles: '/',
-    relativeFromRoutes: '../components',
-  },
+  relativePathFromIndex: './',
 }
 
 export const nested = {
   name: 'Baleada',
   extension: 'js',
-  id: 'ABC',
-  path: {
-    relativeFromFiles: '/nested/',
-    relativeFromRoutes: '../components',
-  },
+  relativePathFromIndex: './nested/',
 }

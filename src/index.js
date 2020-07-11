@@ -1,9 +1,19 @@
-import { toPaths, toWithMetadata, toImport, toRoute } from './util'
+import { toPaths, toMetadata, toExport } from './util'
 
-export default function getTransform (absolutePathToFiles, include = '*') {
-  const paths = toPaths({ absolutePathToFiles, include }),
-        withMetadata = toWithMetadata({ absolutePathsToFiles, paths }),
-        exports = withMetadata.map(toExport).join('\n')
-  
-  return () => exports
+const indexRegExp = /\/index\.js$/
+export default function getTransform (options = {}) {
+  const { include = ['*'], exclude = ['index.js'] } = options
+
+  return ({ id }) => {
+    const dir = id.replace(indexRegExp, ''),
+          paths = toPaths({ dir, include: resolveAsArray(include), exclude: resolveAsArray(exclude) }),
+          withMetadata = toMetadata({ dir, paths }),
+          exports = withMetadata.map(toExport).join('\n')
+    
+    return exports
+  }
+}
+
+function resolveAsArray (stringOrArray) {
+  return Array.isArray(stringOrArray) ? stringOrArray : [stringOrArray]
 }

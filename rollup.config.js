@@ -4,8 +4,7 @@ import resolve from '@rollup/plugin-node-resolve'
 export default {
   external: [
     'fs',
-    'nanoid',
-    'nanoid-dictionary',
+    'minimatch',
   ],
   input: [
     'src/index.js',
