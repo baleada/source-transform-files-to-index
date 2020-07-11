@@ -5,7 +5,7 @@ export default function getTransform (options = {}) {
   const { include = ['*'], exclude = ['index.js'] } = options
 
   return ({ id }) => {
-    const dir = id.replace(indexRegExp, ''),
+    const dir = id.replace(indexRegExp, '').replace(/\/$/, ''),
           paths = toPaths({ dir, include: resolveAsArray(include), exclude: resolveAsArray(exclude) }),
           withMetadata = toMetadata({ dir, paths }),
           exports = withMetadata.map(toExport).join('\n')
