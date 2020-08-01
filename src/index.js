@@ -2,11 +2,13 @@ import { toPaths, toMetadata, toExport } from './util'
 
 const indexRegExp = /\/index\.js$/
 export default function getTransform (options = {}) {
-  const { include = ['*'], exclude = ['index.js'] } = options
+  const { include = '**', exclude = ['**/*index.js', '**/.**'], rawTest } = options,
+        test = resolveTest(include, exclude, rawTest)
+        
 
   return ({ id }) => {
     const dir = id.replace(indexRegExp, '').replace(/\/$/, ''),
-          paths = toPaths({ dir, include: resolveAsArray(include), exclude: resolveAsArray(exclude) }),
+          paths = toPaths({ dir, test }),
           withMetadata = toMetadata({ dir, paths }),
           exports = withMetadata.map(toExport).join('\n')
     
@@ -14,6 +16,8 @@ export default function getTransform (options = {}) {
   }
 }
 
-function resolveAsArray (stringOrArray) {
-  return Array.isArray(stringOrArray) ? stringOrArray : [stringOrArray]
+function resolveTest (include, exclude, test) {
+  return typeof test === 'function'
+    ? test
+    : ({ id, createFilter }) => createFilter(include, exclude)(id)
 }

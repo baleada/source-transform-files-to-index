@@ -4,7 +4,8 @@ import resolve from '@rollup/plugin-node-resolve'
 export default {
   external: [
     'fs',
-    'minimatch',
+    'path',
+    '@rollup/pluginutils',
   ],
   input: [
     'src/index.js',
