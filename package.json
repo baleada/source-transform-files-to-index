@@ -1,6 +1,6 @@
 {
   "name": "@baleada/source-transform-files-to-index",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Transform function, compatible with Baleada Source Transform, that indexes files so they can be imported more easily as ES modules.",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
