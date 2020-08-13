@@ -1,7 +1,9 @@
 import test from 'ava'
 import { toPaths, toMetadata } from '../src/util'
+import { resolve } from 'path'
 
-const dirStub = 'tests/stubs/files',
+const basePath = resolve(''),
+      dirStub = `${basePath}/tests/stubs/files`,
       paths = toPaths({ dir: dirStub, test: ({ id, createFilter }) => createFilter('**', ['**/*index.js', '**/.**'])(id) }) // Tested separately
 
 test('extracts metadata from paths', t => {
