@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/baleada/source-transform-files-to-index.git"
+    "url": "git+https://github.com/baleada/source-transform-files-to-index.git"
   },
   "keywords": [
     "baleada",
@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/baleada/source-transform-files-to-index/issues"
+    "url": "https://github.com/baleada/source-transform-files-to-index/issues"
   },
   "homepage": "https://baleada.netlify.com",
   "devDependencies": {
@@ -38,8 +38,9 @@
     "rollup-plugin-babel": "^4.4.0"
   },
   "dependencies": {
-    "@rollup/pluginutils": "^3.1.0",
-    "nanoid": "^3.1.10",
-    "nanoid-dictionary": "^3.0.0"
+    "@rollup/pluginutils": "^3.1.0"
+  },
+  "peerDependencies": {
+    "@baleada/logic": ">=0.15.19"
   }
 }

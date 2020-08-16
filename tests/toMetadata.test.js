@@ -1,31 +1,43 @@
 import test from 'ava'
-import { toPaths, toMetadata } from '../src/util'
+import { toIds, toMetadata } from '../src/util'
 import { resolve } from 'path'
 
 const basePath = resolve(''),
-      dirStub = `${basePath}/tests/stubs/files`,
-      paths = toPaths({ dir: dirStub, test: ({ id, createFilter }) => createFilter('**', ['**/*index.js', '**/.**'])(id) }) // Tested separately
+      filesDirStub = `${basePath}/tests/stubs/files`,
+      ids = toIds({ filesDir: filesDirStub, test: ({ id, createFilter }) => createFilter('**', ['**/*index.js', '**/.**'])(id) }) // Tested separately
 
-test('extracts metadata from paths', t => {
+test('extracts metadata from ids', t => {
   const value = toMetadata({
-          dir: dirStub,
-          paths
+          filesDir: filesDirStub,
+          ids
         }),
         expected = [
           {
             name: 'baz',
             extension: 'md',
-            relativePathFromIndex: './bar/',
+            path: {
+              relativeFromRoot: '/tests/stubs/files/bar/',
+              relativeFromIndex: './bar/',
+              absolute: `${filesDirStub}/bar/`,
+            }
           },
           {
             name: 'poop',
             extension: 'vue',
-            relativePathFromIndex: './bar/qux/',
+            path: {
+              relativeFromRoot: '/tests/stubs/files/bar/qux/',
+              relativeFromIndex: './bar/qux/',
+              absolute: `${filesDirStub}/bar/qux/`,
+            }
           },
           {
             name: 'foo',
             extension: 'js',
-            relativePathFromIndex: './',
+            path: {
+              relativeFromRoot: '/tests/stubs/files/',
+              relativeFromIndex: './',
+              absolute: `${filesDirStub}/`,
+            }
           },
         ]
 

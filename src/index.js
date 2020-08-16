@@ -1,15 +1,14 @@
-import { dirname } from 'path'
-import { toPaths, toMetadata, toExport } from './util'
+import { toFilesDir, toIds, toMetadata, toExport } from './util'
 
 export default function getTransform (options = {}) {
-  const { include = '**', exclude = ['**/*index.js', '**/.**'], rawTest } = options,
+  const { include = '**', exclude = ['**/*index.js', '**/.**'], rawTest, importType = 'absolute' } = options,
         test = resolveTest(include, exclude, rawTest)
 
   return ({ id }) => {
-    const dir = dirname(id),
-          paths = toPaths({ dir, test }),
-          withMetadata = toMetadata({ dir, paths }),
-          exports = withMetadata.map(toExport).join('\n')
+    const filesDir = toFilesDir(id),
+          ids = toIds({ filesDir, test }),
+          metadata = toMetadata({ filesDir, ids }),
+          exports = metadata.map(fileMetadata => toExport({ fileMetadata, importType })).join('\n')
     
     return exports
   }
