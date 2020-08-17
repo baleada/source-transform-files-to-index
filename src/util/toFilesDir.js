@@ -2,6 +2,7 @@
 
 import { parse } from 'path'
 import { existsSync } from 'fs'
+import { clipable } from '@baleada/logic'
 
 // Returns absolute path to dir
 export default function toFilesDir (id) {
@@ -32,5 +33,5 @@ function looksLike (id) {
 function fromFile (id) {
   const { base } = parse(id),
         baseRE = new RegExp(`/${base}$`)
-  return id.replace(baseRE, '')
+  return clipable(id).clip(baseRE)
 }
