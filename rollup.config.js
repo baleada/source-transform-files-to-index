@@ -6,7 +6,6 @@ export default {
     'fs',
     'path',
     '@rollup/pluginutils',
-    '@baleada/logic',
   ],
   input: [
     'src/index.js',
