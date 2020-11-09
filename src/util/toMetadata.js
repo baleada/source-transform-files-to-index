@@ -12,8 +12,10 @@ export default function toMetadata ({ filesDir, ids }) {
           relativeFromIndex = '.' + id
             .replace(filesDir, '')
             .replace(fileRE, ''),
-          absolute = id
-            .replace(fileRE, '')
+          absolute = (() => {
+            const withoutFile = id.replace(fileRE, '')
+            return withoutFile.startsWith(basePath) ? withoutFile : `${basePath}/${withoutFile}`
+          })()
 
     return {
       name,
