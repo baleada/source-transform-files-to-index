@@ -1,8 +1,8 @@
 import { toFilesDir, toIds, toMetadata, toExport } from './util'
 
-export default function getTransform (options = {}) {
+export default function createTransform (options = {}) {
   const { include = '**', exclude = ['**/*index.js', '**/.**'], test: rawTest, importType = 'absolute' } = options,
-        test = resolveTest(include, exclude, rawTest)
+        test = resolveTest({ include, exclude, test: rawTest })
 
   return ({ id }) => {
     const filesDir = toFilesDir(id),
@@ -14,7 +14,7 @@ export default function getTransform (options = {}) {
   }
 }
 
-function resolveTest (include, exclude, test) {
+function resolveTest ({ include, exclude, test }) {
   return typeof test === 'function'
     ? test
     : ({ id, createFilter }) => createFilter(include, exclude)(id)
