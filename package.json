@@ -32,9 +32,7 @@
   },
   "homepage": "https://baleada.netlify.com",
   "devDependencies": {
-    "@baleada/prepare": "^0.3.1",
-    "@baleada/rollup-plugin-source-transform": "^0.4.4",
-    "@baleada/rollup-plugin-virtual": "^0.0.10",
+    "@baleada/prepare": "^0.3.4",
     "rollup": "^2.33.3",
     "uvu": "^0.5.0"
   },

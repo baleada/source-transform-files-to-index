@@ -1,11 +1,13 @@
 import { toFilesDir, toIds, toMetadata, toExport } from './util'
+import { resolve } from 'path'
 
 export default function createTransform (options = {}) {
   const { include = '**', exclude = ['**/*index.js', '**/.**'], test: rawTest, importType = 'absolute' } = options,
         test = resolveTest({ include, exclude, test: rawTest })
 
-  return ({ id }) => {
-    const filesDir = toFilesDir(id),
+  return ({ id: rawId }) => {
+    const id = rawId.startsWith(basePath) ? rawId : `${basePath}/${rawId.replace(/^\//, '')}`,
+          filesDir = toFilesDir(id),
           ids = toIds({ filesDir, test }),
           metadata = toMetadata({ filesDir, ids }),
           exports = metadata.map(fileMetadata => toExport({ fileMetadata, importType })).join('\n')
@@ -19,3 +21,5 @@ function resolveTest ({ include, exclude, test }) {
     ? test
     : ({ id, createFilter }) => createFilter(include, exclude)(id)
 }
+
+const basePath = resolve('')
